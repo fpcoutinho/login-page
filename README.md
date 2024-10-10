@@ -1,4 +1,4 @@
-# Desafio MB Web
+# Página de login
 
 Esta aplicação foi desenvolvida com uso do Design System [Sanhauá](https://github.com/fpcoutinho/sanhaua).
 
@@ -14,8 +14,8 @@ flowchart LR
 
 |         | Versão    |
 | ------- | --------- |
-| _Node_  | `18.18.2` |
-| _NPM\*_ | `9.8.1`   |
+| _Node_  | `20.9.0` |
+| _NPM\*_ | `10.9.0`   |
 
 ## Set up da aplicação
 
