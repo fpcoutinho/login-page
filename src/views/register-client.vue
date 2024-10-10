@@ -6,75 +6,13 @@
         <span class="current-section">{{ steps.current }}</span>
         de {{ totalSteps }}
       </p>
-      <email-step
-        v-if="currentSection === 'emailStep'"
-        :email="client.email"
-        :type="client.type"
-        @update="updateData"
-      />
-      <pf-details-step
-        v-if="currentSection === 'pfDetails'"
-        :name="client.name"
-        :cpf="client.cpf"
-        :birthdate="client.birthdate"
-        :phone="client.phone"
-        @update="updateData"
-      />
-      <pj-details-step
-        v-if="currentSection === 'pjDetails'"
-        :name="client.name"
-        :cnpj="client.cnpj"
-        :foundationdate="client.foundationdate"
-        :phone="client.phone"
-        @update="updateData"
-      />
-      <password-step
-        v-if="currentSection === 'password'"
-        :password="client.password"
-        @update="updateData"
-      />
-      <pf-review-step
-        v-if="currentSection === 'pfReview'"
-        :email="client.email"
-        :password="client.password"
-        :name="client.name"
-        :cpf="client.cpf"
-        :birthdate="client.birthdate"
-        :phone="client.phone"
-        @update="updateData"
-      />
-      <pj-review-step
-        v-if="currentSection === 'pjReview'"
-        :email="client.email"
-        :password="client.password"
-        :name="client.name"
-        :cnpj="client.cnpj"
-        :foundationdate="client.foundationdate"
-        :phone="client.phone"
-        @update="updateData"
-      />
+      <component :is="currentSection.component" v-bind="clientData" @update="updateData" />
       <div class="button-section" id="form-section-buttons">
-        <ua-button 
-          v-if="!(currentSection === steps.start)"
-          type="button"
-          width-behavior="full"
-          @click.prevent="prev()"
-        >
+        <ua-button v-if="!isFirstStep" type="button" width-behavior="full" @click.prevent="prev()">
           Voltar
         </ua-button>
-        <ua-button 
-          v-if="steps.current !== totalSteps"
-          type="submit"
-          width-behavior="full"
-        >
-          Continuar
-        </ua-button>
-        <ua-button 
-          v-else
-          type="button"
-          width-behavior="full"
-          @click.prevent="submit()"
-        >
+        <ua-button v-if="!isLastStep" type="submit" width-behavior="full"> Continuar </ua-button>
+        <ua-button v-else type="button" width-behavior="full" @click.prevent="submit()">
           Cadastrar
         </ua-button>
       </div>
@@ -83,17 +21,87 @@
 </template>
 
 <script setup>
-  import EmailStep from '../components/email-step.vue'
-  import PasswordStep from '../components/password-step.vue'
-  import PjDetailsStep from '../components/pj-details-step.vue'
-  import PfDetailsStep from '../components/pf-details-step.vue'
-  import PfReviewStep from '../components/pf-review-step.vue'
-  import PjReviewStep from '../components/pj-review-step.vue'
-  import { uaButton } from 'sanhaua'
+import { uaButton } from 'sanhaua'
 
-  import { ref, computed } from 'vue'
+import { ref, computed, defineAsyncComponent } from 'vue'
 
-  const client = ref({
+const clientData = ref({
+  email: '',
+  type: '',
+  name: '',
+  cpf: '',
+  cnpj: '',
+  birthdate: '',
+  foundationdate: '',
+  phone: '',
+  password: ''
+})
+
+const steps = {
+  total: 4,
+  current: ref(1),
+  start: {
+    component: defineAsyncComponent(() => import('../components/email-step.vue'))
+  },
+  // order of steps follow order of array elements
+  pf: [
+    {
+      component: defineAsyncComponent(() => import('../components/pf-details-step.vue'))
+    },
+    {
+      component: defineAsyncComponent(() => import('../components/password-step.vue'))
+    },
+    {
+      component: defineAsyncComponent(() => import('../components/pf-review-step.vue'))
+    }
+  ],
+  pj: [
+    {
+      component: defineAsyncComponent(() => import('../components/pj-details-step.vue'))
+    },
+    {
+      component: defineAsyncComponent(() => import('../components/password-step.vue'))
+    },
+    {
+      component: defineAsyncComponent(() => import('../components/pj-review-step.vue'))
+    }
+  ]
+}
+
+const totalSteps = computed(() => {
+  if (clientData.value.type.length === 0) {
+    return steps.total
+  }
+
+  return steps[clientData.value.type].length + 1
+})
+
+const currentSection = computed(() => {
+  if (steps.current.value === 1) {
+    return steps.start
+  }
+
+  return steps[clientData.value.type][steps.current.value - 2]
+})
+
+const isFirstStep = computed(() => steps.current.value === 1)
+
+const isLastStep = computed(() => steps.current.value === totalSteps.value)
+
+const next = () => {
+  steps.current.value = steps.current.value + 1
+}
+
+const prev = () => {
+  steps.current.value = steps.current.value - 1
+}
+
+const updateData = (event) => {
+  clientData.value = { ...clientData.value, ...event }
+}
+
+const resetClientData = () => {
+  clientData.value = {
     email: '',
     type: '',
     name: '',
@@ -102,63 +110,33 @@
     birthdate: '',
     foundationdate: '',
     phone: '',
-    password: '',
-  })
+    password: ''
+  }
+}
 
-  const steps = ref({
-    total: 4,
-    current: 1,
-    start: 'emailStep',
-    // order of steps follow order of array elements
-    pf: ['pfDetails', 'password', 'pfReview'],
-    pj: ['pjDetails', 'password', 'pjReview'],
-  })
+const submit = async () => {
+  const url = 'http://localhost:3000/registration'
+  let res = ''
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      mode: 'same-origin',
+      body: JSON.stringify(clientData.value),
+      headers: { 'Content-Type': 'application/json' }
+    })
 
-  const totalSteps = computed(() => {
-    if (client.value.type.length === 0) {
-      return steps.value.total
+    if (res.ok) {
+      alert('Cliente cadastrado com sucesso!')
+      steps.current.value = 1
+      resetClientData()
     }
-
-    return steps.value[client.value.type].length + 1
-  })
-
-  const currentSection = computed(() => {
-    if (steps.value.current === 1) {
-      return steps.value.start
-    }
-
-    return steps.value[client.value.type][steps.value.current - 2]
-  })
-
-  const next = () => {
-    steps.value.current = steps.value.current + 1
+  } catch (err) {
+    alert('Erro ao cadastrar cliente')
+    console.log(err)
   }
-
-  const prev = () => {
-    steps.value.current = steps.value.current - 1
-  }
-
-  const updateData = (event) => {
-    client.value = { ...client.value, ...event }
-  }
-
-  const submit = async () => {
-    const url = 'http://localhost:3000/registration'
-    let res = ''
-    try {
-      res = await fetch(url, {
-        method: 'POST',
-        mode: 'same-origin',
-        body: JSON.stringify(client.value),
-        headers: { 'Content-Type': 'application/json' },
-      })
-    } catch (err) {
-      console.log(err)
-    }
-    console.log(res.json())
-  }
+}
 </script>
 
 <style lang="scss">
-  @import '../styles/register-client.scss';
+@import '../styles/register-client.scss';
 </style>
