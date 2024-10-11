@@ -11,6 +11,7 @@ const SELECTED_THEME = 'main'
 
 export default defineConfig({
   plugins: [vue()],
+  base: '/login-page/',
   resolve: {
     alias: [
       {
