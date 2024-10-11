@@ -8,11 +8,33 @@
       </p>
       <component :is="currentSection.component" v-bind="clientData" @update="updateData" />
       <div class="button-section" id="form-section-buttons">
-        <ua-button v-if="!isFirstStep" type="button" width-behavior="full" @click.prevent="prev()">
+        <ua-button
+          v-if="!isFirstStep"
+          type="button"
+          size="medium"
+          appearance="secondary"
+          width-behavior="full"
+          @click.prevent="prev()"
+        >
           Voltar
         </ua-button>
-        <ua-button v-if="!isLastStep" type="submit" width-behavior="full"> Continuar </ua-button>
-        <ua-button v-else type="button" width-behavior="full" @click.prevent="submit()">
+        <ua-button
+          v-if="!isLastStep"
+          type="submit"
+          size="medium"
+          appearance="primary"
+          width-behavior="full"
+        >
+          Continuar
+        </ua-button>
+        <ua-button
+          v-else
+          type="button"
+          size="medium"
+          appearance="primary"
+          width-behavior="full"
+          @click.prevent="submit()"
+        >
           Cadastrar
         </ua-button>
       </div>

@@ -9,18 +9,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "postcss-scss": "^4.0.9",
-    "sanhaua": "^0.2.2",
+    "sanhaua": "^0.3.1",
     "sass-embedded": "^1.79.4",
     "vue": "^3.5.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
     "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/eslint-config-prettier": "^9.0.0",
     "eslint": "^9.12.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vue": "^9.29.0",
-    "globals": "^15.11.0",
     "prettier": "^3.2.5",
+    "postcss-scss": "^4.0.9",
     "stylelint": "^16.9.0",
     "stylelint-config-standard-scss": "^13.1.0",
     "vite": "^5.4.8"
