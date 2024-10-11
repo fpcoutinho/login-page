@@ -114,25 +114,48 @@ const resetClientData = () => {
   }
 }
 
-const submit = async () => {
-  const url = 'http://localhost:3000/registration'
-  let res = ''
-  try {
-    res = await fetch(url, {
-      method: 'POST',
-      mode: 'same-origin',
-      body: JSON.stringify(clientData.value),
-      headers: { 'Content-Type': 'application/json' }
-    })
+const submit = () => {
+  let client = {}
 
-    if (res.ok) {
-      alert('Cliente cadastrado com sucesso!')
-      steps.current.value = 1
-      resetClientData()
+  if (clientData.value.type === 'pf') {
+    client = {
+      email: clientData.value.email,
+      name: clientData.value.name,
+      cpf: clientData.value.cpf,
+      birthdate: clientData.value.birthdate,
+      phone: clientData.value.phone,
+      password: clientData.value.password
     }
-  } catch (err) {
-    alert('Erro ao cadastrar cliente')
-    console.log(err)
+  } else if (clientData.value.type === 'pj') {
+    client = {
+      email: clientData.value.email,
+      name: clientData.value.name,
+      cnpj: clientData.value.cnpj,
+      foundationdate: clientData.value.foundationdate,
+      phone: clientData.value.phone,
+      password: clientData.value.password
+    }
+  } else {
+    alert('Erro! Tipo de cliente não selecionado.')
+    return
+  }
+
+  let hasEmptyFields = false
+
+  for (let key in client) {
+    if (client[key].length === 0) {
+      hasEmptyFields = true
+    }
+  }
+
+  if (hasEmptyFields) {
+    alert('Formulário com campos em branco.')
+    return
+  } else {
+    alert('Cliente cadastrado com sucesso!')
+    steps.current.value = 1
+    resetClientData()
+    return
   }
 }
 </script>

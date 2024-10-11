@@ -3,19 +3,14 @@
 Esta aplicação foi desenvolvida com uso do Design System [Sanhauá](https://github.com/fpcoutinho/sanhaua).
 
 Web app simples que simula uma tela de cadastro de usuários com 4 passos.<br>
-O client foi desenvolvido utilizando vue.js 3, o servidor com nodejs e express, e a aplicação é renderizada no servidor utilizando os métodos nativos de SSR do Vite.<br>
-
-```mermaid
-flowchart LR
-    Client(Vue Registration Component) --> Server(NodeJS Express API)
-```
+Feita com vue.js 3, vite e sass-embedded.<br>
 
 ## Requisitos
 
-|         | Versão    |
-| ------- | --------- |
+|         | Versão   |
+| ------- | -------- |
 | _Node_  | `20.9.0` |
-| _NPM\*_ | `10.9.0`   |
+| _NPM\*_ | `10.9.0` |
 
 ## Set up da aplicação
 
