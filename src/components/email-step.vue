@@ -3,65 +3,58 @@
     <h2 class="step-header">Seja bem vindo(a)</h2>
     <label for="email">Endereço de e-mail</label>
     <input
+      id="email"
+      v-model="userEmail"
       class="register-client-input-field"
       type="email"
-      id="email"
       autocomplete="email"
-      v-model="userEmail"
-      @input="dispatchEvent('update', { email: userEmail })"
       required
+      @input="dispatchEvent('update', { email: userEmail })"
     />
     <div class="form-group">
-      <input
-        class="register-client-input-radio"
-        type="radio"
-        id="pessoa-fisica"
+      <ua-input-radio
+        v-model="userType"
         name="client-type"
         value="pf"
-        v-model="userType"
-        @change="dispatchEvent('update', { type: userType })"
+        label="Pessoa Física"
+        size="medium"
         required
+        @change="dispatchEvent('update', { type: userType })"
       />
-      <label class="register-client-input-radio-label" for="pessoa-fisica"
-        >Pessoa Física</label
-      >
-      <input
-        class="register-client-input-radio"
-        type="radio"
-        id="pessoa-juridica"
+      <ua-input-radio
+        v-model="userType"
         name="client-type"
         value="pj"
-        v-model="userType"
-        @change="dispatchEvent('update', { type: userType })"
+        label="Pessoa Jurídica"
+        size="medium"
         required
+        @change="dispatchEvent('update', { type: userType })"
       />
-      <label class="register-client-input-radio-label" for="pessoa-juridica"
-        >Pessoa Jurídica</label
-      >
     </div>
   </div>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+import { ref } from 'vue'
+import { uaInputRadio } from 'sanhaua'
 
-  const emit = defineEmits(['update'])
+const emit = defineEmits(['update'])
 
-  const props = defineProps({
-    email: {
-      type: String,
-      required: true,
-    },
-    type: {
-      type: String,
-      required: true,
-    },
-  })
-
-  const userEmail = ref(props.email)
-  const userType = ref(props.type)
-
-  const dispatchEvent = (eventName, eventObject) => {
-    emit(eventName, eventObject)
+const props = defineProps({
+  email: {
+    type: String,
+    required: true
+  },
+  type: {
+    type: String,
+    required: true
   }
+})
+
+const userEmail = ref(props.email)
+const userType = ref(props.type)
+
+const dispatchEvent = (eventName, eventObject) => {
+  emit(eventName, eventObject)
+}
 </script>

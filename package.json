@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "sanhaua": "^0.3.3",
+    "sanhaua": "^0.4.2",
     "sass-embedded": "^1.79.4",
     "vue": "^3.5.11"
   },
