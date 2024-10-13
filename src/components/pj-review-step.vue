@@ -1,109 +1,109 @@
 <template>
   <div class="form-section">
     <h2 class="step-header">Revise suas informações</h2>
-    <label for="email">Endereço de e-mail</label>
-    <input
-      class="register-client-input-field"
-      type="email"
+    <ua-input-email
       id="email"
-      autocomplete="email"
       v-model="userEmail"
-      @input="dispatchEvent('update', { email: userEmail })"
+      label="Endereço de e-mail"
+      size="medium"
+      autocomplete
       required
+      @input="dispatchEvent('update', { email: userEmail })"
     />
     <label for="name">Razão Social</label>
     <input
+      id="name"
+      v-model="userName"
       class="register-client-input-field"
       type="text"
-      id="name"
       autocomplete="name"
-      v-model="userName"
-      @input="dispatchEvent('update', { name: userName })"
       required
+      @input="dispatchEvent('update', { name: userName })"
     />
     <label for="cnpj">CNPJ</label>
     <input
+      id="cnpj"
+      v-model="userCnpj"
       class="register-client-input-field"
       type="text"
-      id="cnpj"
       autocomplete="on"
-      v-model="userCnpj"
-      @input="dispatchEvent('update', { cnpj: userCnpj })"
       required
+      @input="dispatchEvent('update', { cnpj: userCnpj })"
     />
     <label for="foundation-date">Data de abertura</label>
     <input
+      id="foundation-date"
+      v-model="userFoundationdate"
       class="register-client-input-field"
       type="date"
-      id="foundation-date"
       autocomplete="bday"
-      v-model="userFoundationdate"
-      @input="dispatchEvent('update', { foundationdate: userFoundationdate })"
       required
+      @input="dispatchEvent('update', { foundationdate: userFoundationdate })"
     />
     <label for="phone-number">Telefone</label>
     <input
+      id="phone-number"
+      v-model="userPhone"
       class="register-client-input-field"
       type="text"
-      id="phone-number"
       autocomplete="tel-national"
-      v-model="userPhone"
-      @input="dispatchEvent('update', { phone: userPhone })"
       required
+      @input="dispatchEvent('update', { phone: userPhone })"
     />
     <label for="password">Sua senha</label>
     <input
+      id="password"
+      v-model="userPassword"
       class="register-client-input-field"
       type="password"
-      id="password"
       autocomplete="new-password"
-      v-model="userPassword"
-      @input="dispatchEvent('update', { password: userPassword })"
       required
+      @input="dispatchEvent('update', { password: userPassword })"
     />
   </div>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+import { ref } from 'vue'
+import { uaInputEmail } from 'sanhaua'
 
-  const emit = defineEmits(['update'])
+const emit = defineEmits(['update'])
 
-  const props = defineProps({
-    email: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    phone: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    cnpj: {
-      type: String,
-      required: true,
-    },
-    foundationdate: {
-      type: String,
-      required: true,
-    },
-  })
-
-  const userEmail = ref(props.email)
-  const userName = ref(props.name)
-  const userCnpj = ref(props.cnpj)
-  const userFoundationdate = ref(props.foundationdate)
-  const userPhone = ref(props.phone)
-  const userPassword = ref(props.password)
-
-  const dispatchEvent = (eventName, eventObject) => {
-    emit(eventName, eventObject)
+const props = defineProps({
+  email: {
+    type: String,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  phone: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  cnpj: {
+    type: String,
+    required: true
+  },
+  foundationdate: {
+    type: String,
+    required: true
   }
+})
+
+const userEmail = ref(props.email)
+const userName = ref(props.name)
+const userCnpj = ref(props.cnpj)
+const userFoundationdate = ref(props.foundationdate)
+const userPhone = ref(props.phone)
+const userPassword = ref(props.password)
+
+const dispatchEvent = (eventName, eventObject) => {
+  emit(eventName, eventObject)
+}
 </script>

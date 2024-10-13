@@ -1,13 +1,12 @@
 <template>
   <div class="form-section">
     <h2 class="step-header">Seja bem vindo(a)</h2>
-    <label for="email">Endereço de e-mail</label>
-    <input
+    <ua-input-email
       id="email"
       v-model="userEmail"
-      class="register-client-input-field"
-      type="email"
-      autocomplete="email"
+      label="Endereço de e-mail"
+      size="medium"
+      autocomplete
       required
       @input="dispatchEvent('update', { email: userEmail })"
     />
@@ -36,7 +35,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { uaInputRadio } from 'sanhaua'
+import { uaInputRadio, uaInputEmail } from 'sanhaua'
 
 const emit = defineEmits(['update'])
 
