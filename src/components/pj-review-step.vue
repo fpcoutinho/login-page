@@ -10,42 +10,38 @@
       required
       @input="dispatchEvent('update', { email: userEmail })"
     />
-    <label for="name">Razão Social</label>
-    <input
+    <ua-input-text
       id="name"
       v-model="userName"
-      class="register-client-input-field"
-      type="text"
+      label="Razão Social"
+      size="medium"
       autocomplete="name"
       required
       @input="dispatchEvent('update', { name: userName })"
     />
-    <label for="cnpj">CNPJ</label>
-    <input
+    <ua-input-text
       id="cnpj"
       v-model="userCnpj"
-      class="register-client-input-field"
-      type="text"
+      label="CNPJ"
+      size="medium"
       autocomplete="on"
       required
       @input="dispatchEvent('update', { cnpj: userCnpj })"
     />
-    <label for="foundation-date">Data de abertura</label>
-    <input
-      id="foundation-date"
+    <ua-input-date
+      id="foundationdate"
       v-model="userFoundationdate"
-      class="register-client-input-field"
-      type="date"
+      label="Data de abertura"
+      size="medium"
       autocomplete="bday"
       required
       @input="dispatchEvent('update', { foundationdate: userFoundationdate })"
     />
-    <label for="phone-number">Telefone</label>
-    <input
+    <ua-input-tel
       id="phone-number"
       v-model="userPhone"
-      class="register-client-input-field"
-      type="text"
+      label="Telefone"
+      size="medium"
       autocomplete="tel-national"
       required
       @input="dispatchEvent('update', { phone: userPhone })"
@@ -64,7 +60,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { uaInputEmail, uaInputPassword } from 'sanhaua'
+import { uaInputEmail, uaInputPassword, uaInputText, uaInputDate, uaInputTel } from 'sanhaua'
 
 const emit = defineEmits(['update'])
 

@@ -42,6 +42,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { uaInputText, uaInputDate, uaInputTel } from 'sanhaua'
 
 const emit = defineEmits(['update'])
 

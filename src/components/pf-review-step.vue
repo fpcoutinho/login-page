@@ -10,42 +10,38 @@
       required
       @input="dispatchEvent('update', { email: userEmail })"
     />
-    <label for="name">Nome</label>
-    <input
+    <ua-input-text
       id="name"
       v-model="userName"
-      class="register-client-input-field"
-      type="text"
+      label="Nome"
+      size="medium"
       autocomplete="name"
       required
       @input="dispatchEvent('update', { name: userName })"
     />
-    <label for="cpf">CPF</label>
-    <input
+    <ua-input-text
       id="cpf"
       v-model="userCpf"
-      class="register-client-input-field"
-      type="text"
+      label="CPF"
+      size="medium"
       autocomplete="on"
       required
       @input="dispatchEvent('update', { cpf: userCpf })"
     />
-    <label for="birthdate">Data de nascimento</label>
-    <input
+    <ua-input-date
       id="birthdate"
       v-model="userBirthdate"
-      class="register-client-input-field"
-      type="date"
+      label="Data de nascimento"
+      size="medium"
       autocomplete="bday"
       required
       @input="dispatchEvent('update', { birthdate: userBirthdate })"
     />
-    <label for="phone-number">Telefone</label>
-    <input
+    <ua-input-tel
       id="phone-number"
       v-model="userPhone"
-      class="register-client-input-field"
-      type="text"
+      label="Telefone"
+      size="medium"
       autocomplete="tel-national"
       required
       @input="dispatchEvent('update', { phone: userPhone })"
@@ -64,7 +60,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { uaInputEmail } from 'sanhaua'
+import { uaInputEmail, uaInputPassword, uaInputText, uaInputDate, uaInputTel } from 'sanhaua'
 
 const emit = defineEmits(['update'])
 
