@@ -1,79 +1,76 @@
 <template>
   <div class="form-section">
     <h2 class="step-header">Pessoa Física</h2>
-    <label for="name">Nome</label>
-    <input
-      class="register-client-input-field"
-      type="text"
+    <ua-input-text
       id="name"
-      autocomplete="name"
       v-model="userName"
+      label="Nome"
+      size="medium"
+      autocomplete="name"
+      required
       @input="dispatchEvent('update', { name: userName })"
-      required
     />
-    <label for="cpf">CPF</label>
-    <input
-      class="register-client-input-field"
-      type="text"
+    <ua-input-text
       id="cpf"
-      autocomplete="on"
       v-model="userCpf"
+      label="CPF"
+      size="medium"
+      autocomplete="on"
+      required
       @input="dispatchEvent('update', { cpf: userCpf })"
-      required
     />
-    <label for="birthdate">Data de nascimento</label>
-    <input
-      class="register-client-input-field"
-      type="date"
+    <ua-input-date
       id="birthdate"
-      autocomplete="bday"
       v-model="userBirthdate"
+      label="Data de nascimento"
+      size="medium"
+      autocomplete="bday"
+      required
       @input="dispatchEvent('update', { birthdate: userBirthdate })"
-      required
     />
-    <label for="phone-number">Telefone</label>
-    <input
-      class="register-client-input-field"
-      type="text"
+    <ua-input-tel
       id="phone-number"
-      autocomplete="tel-national"
       v-model="userPhone"
-      @input="dispatchEvent('update', { phone: userPhone })"
+      label="Telefone"
+      size="medium"
+      autocomplete="tel-national"
       required
+      @input="dispatchEvent('update', { phone: userPhone })"
     />
   </div>
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+import { ref } from 'vue'
+import { uaInputText, uaInputDate, uaInputTel } from 'sanhaua'
 
-  const emit = defineEmits(['update'])
+const emit = defineEmits(['update'])
 
-  const props = defineProps({
-    name: {
-      type: String,
-      required: true,
-    },
-    cpf: {
-      type: String,
-      required: true,
-    },
-    birthdate: {
-      type: String,
-      required: true,
-    },
-    phone: {
-      type: String,
-      required: true,
-    },
-  })
-
-  const userName = ref(props.name)
-  const userCpf = ref(props.cpf)
-  const userBirthdate = ref(props.birthdate)
-  const userPhone = ref(props.phone)
-
-  const dispatchEvent = (eventName, eventObject) => {
-    emit(eventName, eventObject)
+const props = defineProps({
+  name: {
+    type: String,
+    required: true
+  },
+  cpf: {
+    type: String,
+    required: true
+  },
+  birthdate: {
+    type: String,
+    required: true
+  },
+  phone: {
+    type: String,
+    required: true
   }
+})
+
+const userName = ref(props.name)
+const userCpf = ref(props.cpf)
+const userBirthdate = ref(props.birthdate)
+const userPhone = ref(props.phone)
+
+const dispatchEvent = (eventName, eventObject) => {
+  emit(eventName, eventObject)
+}
 </script>

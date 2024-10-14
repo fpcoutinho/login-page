@@ -50,12 +50,11 @@
       required
       @input="dispatchEvent('update', { phone: userPhone })"
     />
-    <label for="password">Sua senha</label>
-    <input
+    <ua-input-password
       id="password"
       v-model="userPassword"
-      class="register-client-input-field"
-      type="password"
+      size="medium"
+      label="Sua senha"
       autocomplete="new-password"
       required
       @input="dispatchEvent('update', { password: userPassword })"
