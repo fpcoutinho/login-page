@@ -6,8 +6,22 @@
         <span class="current-section">{{ steps.current }}</span>
         de {{ totalSteps }}
       </p>
-      <component :is="currentSection.component" v-bind="clientData" @update="updateData" />
-      <div class="button-section" id="form-section-buttons">
+      <Suspense>
+        <component :is="currentSection.component" v-bind="clientData" @update="updateData" />
+
+        <template #fallback>
+          <ua-skeleton format="square" style="width: 150px; height: 32px" />
+          <br />
+          <br />
+          <ua-skeleton format="square" style="width: 50px; height: 15px" />
+          <ua-skeleton format="round" style="width: 350px; height: 35px" />
+          <ua-skeleton format="square" style="width: 50px; height: 15px" />
+          <ua-skeleton format="round" style="width: 350px; height: 35px" />
+          <ua-skeleton format="circle" style="width: 200px; height: 35px" />
+          <ua-skeleton format="round" style="width: 350px; height: 35px" />
+        </template>
+      </Suspense>
+      <div id="form-section-buttons" class="button-section">
         <ua-button
           v-if="!isFirstStep"
           type="button"
@@ -43,8 +57,7 @@
 </template>
 
 <script setup>
-import { uaButton } from 'sanhaua'
-
+import { uaButton, uaSkeleton } from 'sanhaua'
 import { ref, computed, defineAsyncComponent } from 'vue'
 
 const clientData = ref({
