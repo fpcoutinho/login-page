@@ -6,19 +6,21 @@
         <span class="current-section">{{ steps.current }}</span>
         de {{ totalSteps }}
       </p>
-      <Suspense>
-        <component :is="currentSection.component" v-bind="clientData" @update="updateData" />
+      <Suspense timeout="500000">
+        <template #default>
+          <component :is="currentSection.component" v-bind="clientData" @update="updateData" />
+        </template>
 
         <template #fallback>
-          <ua-skeleton format="square" style="width: 150px; height: 32px" />
-          <br />
-          <br />
-          <ua-skeleton format="square" style="width: 50px; height: 15px" />
-          <ua-skeleton format="round" style="width: 350px; height: 35px" />
-          <ua-skeleton format="square" style="width: 50px; height: 15px" />
-          <ua-skeleton format="round" style="width: 350px; height: 35px" />
-          <ua-skeleton format="circle" style="width: 200px; height: 35px" />
-          <ua-skeleton format="round" style="width: 350px; height: 35px" />
+          <div class="form-section">
+            <ua-skeleton format="square" style="width: 150px; height: 32px" />
+            <ua-skeleton format="square" style="width: 50px; height: 15px" />
+            <ua-skeleton format="round" style="width: 350px; height: 35px" />
+            <ua-skeleton format="square" style="width: 50px; height: 15px" />
+            <ua-skeleton format="round" style="width: 350px; height: 35px" />
+            <ua-skeleton format="circle" style="width: 200px; height: 35px" />
+            <ua-skeleton format="round" style="width: 350px; height: 35px" />
+          </div>
         </template>
       </Suspense>
       <div id="form-section-buttons" class="button-section">
@@ -53,12 +55,23 @@
         </ua-button>
       </div>
     </form>
+    <div v-show="$toasts.queue.length > 0" class="toast-container">
+      <ua-toast
+        v-for="toast in $toasts.queue"
+        :key="toast.id"
+        :appearance="toast.appearance"
+        :message="toast.message"
+        :title="toast.title"
+      />
+    </div>
   </main>
 </template>
 
 <script setup>
-import { uaButton, uaSkeleton } from 'sanhaua'
-import { ref, computed, defineAsyncComponent } from 'vue'
+import { uaButton, uaSkeleton, uaToast } from 'sanhaua'
+import { ref, computed, defineAsyncComponent, inject } from 'vue'
+
+const $toasts = inject('toasts')
 
 const clientData = ref({
   email: '',
@@ -171,7 +184,11 @@ const submit = () => {
       password: clientData.value.password
     }
   } else {
-    alert('Erro! Tipo de cliente não selecionado.')
+    $toasts.enqueue({
+      title: 'Erro!',
+      message: 'Tipo de cliente não selecionado.',
+      appearance: 'danger'
+    })
     return
   }
 
@@ -184,10 +201,18 @@ const submit = () => {
   }
 
   if (hasEmptyFields) {
-    alert('Formulário com campos em branco.')
+    $toasts.enqueue({
+      title: 'Erro!',
+      message: 'Formulário com campos em branco.',
+      appearance: 'danger'
+    })
     return
   } else {
-    alert('Cliente cadastrado com sucesso!')
+    $toasts.enqueue({
+      title: 'Sucesso!',
+      message: 'Cliente cadastrado com sucesso!',
+      appearance: 'success'
+    })
     steps.current.value = 1
     resetClientData()
     return
