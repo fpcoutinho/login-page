@@ -5,7 +5,7 @@ const queue = ref([])
 export default {
   install: (app) => {
     // Adds new toast to queue
-    const enqueue = (toastData, timeout = 3200) => {
+    const enqueue = (toastData, timeout = 4800) => {
       toastData = Object.assign({ id: Date.now() }, toastData)
       queue.value.push(toastData)
 

@@ -62,6 +62,7 @@
         :appearance="toast.appearance"
         :message="toast.message"
         :title="toast.title"
+        @dismiss="$toasts.dequeue(toast.id)"
       />
     </div>
   </main>
