@@ -1,18 +1,42 @@
 body {
   margin: 0;
-}
+  min-height: 100vh;
 
-main {
-  padding: spacing(4);
-  max-width: 100vw;
-  box-sizing: border-box;
+  .sanhaua {
+    height: 100vh;
+
+    main {
+      padding: spacing(4);
+      max-width: 100vw;
+      box-sizing: border-box;
+      height: 100%;
+    }
+  }
+
+  &.light {
+    background-color: map.get($color-neutral-light, '100');
+    color: map.get($color-neutral-light, '900');
+
+    .current-section {
+      color: map.get($color-primary-light, '500');
+    }
+  }
+
+  &.dark {
+    background-color: map.get($color-neutral-dark, '100');
+    color: map.get($color-neutral-dark, '900');
+
+    .current-section {
+      color: map.get($color-primary-dark, '500');
+    }
+  }
 }
 
 .register-client-form {
   display: flex;
   flex-direction: column;
   gap: spacing(4);
-  max-width: width(4);
+  max-width: width(3);
   font-family: $font-family;
   color: #09141b;
 
@@ -43,7 +67,8 @@ main {
 .button-section {
   display: flex;
   justify-content: space-between;
-  gap: spacing(5);
+  gap: spacing(2);
+  margin-top: spacing(2);
 }
 
 .step-header {
@@ -56,10 +81,6 @@ main {
   margin: 0;
 
   @include body-2;
-}
-
-.current-section {
-  color: gray;
 }
 
 .toast-container {

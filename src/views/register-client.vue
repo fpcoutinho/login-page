@@ -6,7 +6,7 @@
         <span class="current-section">{{ steps.current }}</span>
         de {{ totalSteps }}
       </p>
-      <Suspense timeout="500000">
+      <Suspense timeout="0">
         <template #default>
           <component :is="currentSection.component" v-bind="clientData" @update="updateData" />
         </template>
@@ -28,7 +28,7 @@
           v-if="!isFirstStep"
           type="button"
           size="medium"
-          appearance="secondary"
+          appearance="tertiary"
           width-behavior="full"
           @click.prevent="prev()"
         >
