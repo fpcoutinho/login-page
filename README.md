@@ -25,21 +25,5 @@ npm install
 Rodar a aplicação no modo de desenvolvimento
 
 ```console
-npm run server
+npm run dev
 ```
-
----
-
-## Layout
-
-O layout completo da aplicação, com todos os passos.
-
-## Endpoints
-
-`[GET] /registration`
-
-- Responsável por renderizar um html simples que irá carregar os componentes do formulário.
-
-`[POST] /registration`
-
-- Responsável por receber os dados submetidos pelo usuário em formato JSON.
